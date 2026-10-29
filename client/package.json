@@ -1,6 +1,6 @@
 {
   "name": "onde-passa-hoje-web",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3000 --proxy-config proxy.conf.json",

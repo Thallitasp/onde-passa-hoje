@@ -4,6 +4,8 @@ O Onde Passa Hoje é um projeto independente para consultar os jogos de futebol 
 
 O projeto é distribuído sob a licença [MIT](LICENSE), que permite consultar, usar, modificar e redistribuir o código nos termos da licença. Consulte também as condições próprias dos provedores de dados e ativos de terceiros.
 
+**Versão atual:** `0.3.0` — versão em desenvolvimento. O histórico e as regras de versionamento estão em [CHANGELOG.md](CHANGELOG.md).
+
 ## O que a aplicação oferece
 
 - Agenda de jogos por data, com horário de Brasília, competição, escudos, placar e status.
@@ -11,7 +13,7 @@ O projeto é distribuído sob a licença [MIT](LICENSE), que permite consultar, 
 - Detalhes da partida com notícias do ge, desfalques e escalação provável quando publicados.
 - Autores dos gols quando a Football-Data.org disponibiliza os eventos e a partida pode ser associada com segurança.
 - Filtros por competição, interface adaptável a celular e temas claro e escuro.
-- Área de blog com artigos de exemplo mantidos no frontend.
+- Área de blog em construção, com artigos de exemplo mantidos no frontend.
 
 Os dados podem estar incompletos ou mudar perto do início da partida. A interface identifica canais não confirmados e informa quando a cobertura editorial ainda não publicou desfalques ou escalações.
 

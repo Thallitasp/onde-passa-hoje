@@ -2,6 +2,7 @@ import { Component, Inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
+import packageJson from '../../package.json';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { ButtonDirective } from 'primeng/button';
   styleUrl: './app.css',
 })
 export class App {
+  protected readonly version = packageJson.version;
   protected readonly darkMode = signal(true);
 
   constructor(@Inject(DOCUMENT) private readonly document: Document) {

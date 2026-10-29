@@ -1,5 +1,16 @@
 :host { display: block; }
 .blog-shell { min-height: 67vh; padding: 30px 0 60px; }
+.construction-notice {
+  display: flex; align-items: center; gap: 14px; margin: 0 0 20px; padding: 13px 16px;
+  border: 1px solid color-mix(in srgb, var(--app-accent) 35%, var(--app-border)); border-radius: 14px;
+  background: color-mix(in srgb, var(--app-accent) 7%, var(--app-panel));
+}
+.construction-badge {
+  display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; color: var(--app-accent);
+  font-size: 0.76rem; font-weight: 850; letter-spacing: 0.03em;
+}
+.construction-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--app-accent); }
+.construction-notice p { margin: 0; color: var(--app-muted); font-size: 0.83rem; line-height: 1.45; }
 .blog-heading { padding: 46px 0 32px; }
 .eyebrow { margin: 0; color: var(--app-accent); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; }
 .blog-heading h1, .article h1 {
@@ -50,6 +61,8 @@
 .related-links a { display: flex; justify-content: space-between; color: var(--app-text); font-size: 0.9rem; text-decoration: none; }
 @media (max-width: 650px) {
   .blog-shell { padding-top: 4px; }
+  .construction-notice { align-items: flex-start; flex-direction: column; gap: 7px; margin-bottom: 12px; padding: 12px 14px; }
+  .construction-notice p { font-size: 0.79rem; }
   .blog-heading { padding: 35px 0 24px; }
   .post-grid { grid-template-columns: 1fr; }
   .post-art { height: 145px; }
