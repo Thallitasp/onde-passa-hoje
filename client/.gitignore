@@ -1,0 +1,8 @@
+# Dependencies and generated Angular files
+/node_modules
+/dist
+/.angular
+/coverage
+
+# Local editor configuration
+/.vscode

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', Arial, sans-serif;
+  color: #f7f8f7;
+  background: #101311;
+  color-scheme: dark;
+  --app-bg: #101311;
+  --app-panel: #191d1a;
+  --app-panel-strong: #202622;
+  --app-border: #303833;
+  --app-text: #f2f5f2;
+  --app-muted: #a1aaa4;
+  --app-accent: #00d084;
+}
+html:not(.app-dark) {
+  color: #17211a;
+  background: #f4f7f4;
+  color-scheme: light;
+  --app-bg: #f4f7f4;
+  --app-panel: #ffffff;
+  --app-panel-strong: #eaf2ed;
+  --app-border: #dce5df;
+  --app-text: #17211a;
+  --app-muted: #607066;
+  --app-accent: #008f58;
+}
+html, body { min-width: 320px; min-height: 100%; margin: 0; }
+body {
+  background: radial-gradient(ellipse at 55% 0%, color-mix(in srgb, var(--app-accent) 5%, transparent), transparent 38rem), var(--app-bg);
+  color: var(--app-text);
+  font-family: 'DM Sans', Arial, sans-serif;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+* { box-sizing: border-box; }
+button, input { font: inherit; }
+.p-component { font-family: 'DM Sans', Arial, sans-serif; }
+
+body {
+  overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,155 @@
+:host { display: block; }
+.detail-shell { max-width: 900px; min-height: 65vh; margin: 0 auto; padding: 24px 0 56px; }
+.back-link {
+  display: inline-block; margin-bottom: 34px; color: var(--app-muted);
+  font-size: 0.86rem; font-weight: 700; text-decoration: none;
+}
+.back-link:hover { color: var(--app-accent); }
+.eyebrow, .fact-label { margin: 0; color: var(--app-accent); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; }
+.detail-shell > h1 {
+  margin: 9px 0; color: var(--app-text); font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: -0.07em;
+}
+.detail-date { margin: 0 0 24px; color: var(--app-muted); text-transform: capitalize; }
+.detail-card {
+  overflow: hidden; border: 1px solid var(--app-border); border-radius: 22px;
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--app-accent) 11%, transparent), transparent 60%), var(--app-panel);
+}
+.detail-card ::ng-deep .p-card-body { padding: clamp(22px, 5vw, 50px); }
+.detail-card ::ng-deep .p-card-content { padding: 0; }
+.scoreboard { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 18px; }
+.club {
+  display: flex; align-items: center; flex-direction: column; gap: 10px;
+  color: var(--app-text); font-size: clamp(0.95rem, 3vw, 1.2rem); font-weight: 800; text-align: center;
+}
+.club-crest { width: 68px; height: 68px; object-fit: contain; }
+.club small { color: var(--app-muted); font-size: 0.75rem; font-weight: 500; line-height: 1.5; }
+.score { display: flex; align-items: center; gap: 12px; color: var(--app-text); font-size: clamp(1.5rem, 6vw, 2.7rem); font-weight: 900; letter-spacing: -0.07em; }
+.score span { color: var(--app-muted); font-size: 0.8rem; }
+.detail-divider { height: 1px; margin: 34px 0 24px; background: var(--app-border); }
+.detail-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.detail-facts > div { display: grid; gap: 7px; }
+.detail-facts strong { color: var(--app-text); font-size: 0.94rem; }
+.detail-facts small, .goal-note { color: var(--app-muted); font-size: 0.8rem; }
+.broadcast-source { width: fit-content; color: var(--app-accent); font-size: 0.8rem; font-weight: 700; text-decoration: none; }
+.broadcast-source:hover { text-decoration: underline; }
+.goal-note { margin-top: 16px; }
+.preview-section { display: grid; gap: 14px; margin-top: 34px; }
+.preview-heading h2 { margin: 7px 0 0; color: var(--app-text); font-size: clamp(1.3rem, 4vw, 1.8rem); letter-spacing: -0.04em; }
+.preview-card, .preview-empty {
+  display: grid; gap: 16px; padding: clamp(18px, 4vw, 26px);
+  border: 1px solid var(--app-border); border-radius: 18px; background: var(--app-panel);
+}
+.preview-card-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.preview-source { color: var(--app-accent); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.preview-card-heading h3 { margin: 6px 0 0; color: var(--app-text); font-size: 1.12rem; line-height: 1.35; }
+.preview-card-heading small { flex: 0 0 auto; color: var(--app-muted); font-size: 0.75rem; }
+.preview-summary, .preview-empty p { margin: 0; color: var(--app-muted); font-size: 0.9rem; line-height: 1.6; }
+.preview-teams { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.preview-team { min-width: 0; padding: 15px; border: 1px solid var(--app-border); border-radius: 14px; background: color-mix(in srgb, var(--app-panel) 75%, var(--app-bg)); }
+.preview-team h4 { margin: 0 0 11px; color: var(--app-text); font-size: 0.95rem; }
+.preview-facts { display: grid; gap: 9px; }
+.preview-facts p { margin: 0; color: var(--app-muted); font-size: 0.82rem; line-height: 1.5; overflow-wrap: anywhere; }
+.preview-facts strong { color: var(--app-text); }
+.preview-source-link { width: fit-content; color: var(--app-accent); font-size: 0.84rem; font-weight: 800; text-decoration: none; }
+.preview-source-link:hover { text-decoration: underline; }
+.preview-retry { width: fit-content; border-radius: 10px !important; background: var(--app-accent) !important; color: #07120d !important; }
+.detail-message {
+  display: grid; justify-items: center; gap: 12px; margin-top: 40px; padding: 48px 24px;
+  border: 1px solid var(--app-border); border-radius: 20px; background: var(--app-panel); text-align: center;
+}
+.detail-message h1, .detail-message p { margin: 0; color: var(--app-text); }
+.detail-message p { color: var(--app-muted); }
+.loading-ball { font-size: 2rem; }
+.message-symbol { color: var(--app-accent); font-size: 1.6rem; }
+.back-button { margin-top: 8px; border-radius: 11px !important; background: var(--app-accent) !important; color: #07120d !important; }
+@media (max-width: 580px) {
+  .scoreboard { grid-template-columns: 1fr; justify-items: center; }
+  .score { grid-row: 1; margin-bottom: 8px; }
+  .detail-facts { grid-template-columns: 1fr; }
+  .preview-teams { grid-template-columns: 1fr; }
+  .preview-card-heading { flex-direction: column; gap: 7px; }
+  .preview-card-heading small { order: -1; }
+}
+
+@media (max-width: 580px) {
+  .detail-shell {
+    min-height: 62vh;
+    padding: 8px 0 38px;
+  }
+
+  .back-link {
+    min-height: 42px;
+    margin-bottom: 22px;
+    padding: 10px 0;
+  }
+
+  .detail-shell > h1 {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+    line-height: 1.05;
+  }
+
+  .detail-date {
+    margin-bottom: 18px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .detail-card {
+    border-radius: 17px;
+  }
+
+  .detail-card ::ng-deep .p-card-body {
+    padding: 22px 15px;
+  }
+
+  .scoreboard {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .club {
+    min-width: 0;
+    gap: 8px;
+    font-size: 0.83rem;
+    overflow-wrap: anywhere;
+  }
+
+  .club-crest {
+    width: 52px;
+    height: 52px;
+  }
+
+  .club small {
+    font-size: 0.66rem;
+  }
+
+  .score {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 6px;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+
+  .score span {
+    font-size: 0.67rem;
+  }
+
+  .detail-divider {
+    margin: 25px 0 19px;
+  }
+
+  .detail-facts {
+    gap: 17px;
+  }
+
+  .detail-facts small {
+    line-height: 1.5;
+  }
+
+  .detail-message {
+    margin-top: 25px;
+    padding: 36px 17px;
+  }
+}

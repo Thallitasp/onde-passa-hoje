@@ -1,0 +1,25 @@
+<div class="app-frame">
+  <header class="site-header">
+    <a class="brand" routerLink="/" aria-label="Onde Passa Hoje, página inicial">
+      <span class="brand-mark" aria-hidden="true">OP</span>
+      <span>Onde Passa <strong>Hoje</strong></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Jogos</a>
+      <a routerLink="/blog" routerLinkActive="active">Blog</a>
+      <button pButton type="button" class="theme-button" (click)="toggleTheme()"
+        [attr.aria-label]="darkMode() ? 'Ativar tema claro' : 'Ativar tema escuro'">
+        {{ darkMode() ? '☀ Tema' : '☾ Tema' }}
+      </button>
+    </nav>
+  </header>
+
+  <router-outlet />
+
+  <footer class="site-footer">
+    <a class="footer-brand" routerLink="/">Onde Passa Hoje</a>
+    <span>Futebol do dia, sem perder o horário.</span>
+    <span class="footer-credit">Agenda e transmissões: ge · Placares e autores dos gols: Football-Data.org quando disponíveis.</span>
+  </footer>
+</div>

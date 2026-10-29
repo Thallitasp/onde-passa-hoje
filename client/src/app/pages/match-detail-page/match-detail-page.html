@@ -1,0 +1,138 @@
+<main class="detail-shell">
+  <a class="back-link" routerLink="/" [queryParams]="{ data: dateValue() }">← Voltar para os jogos</a>
+
+  @if (loading()) {
+    <section class="detail-message" aria-live="polite">
+      <span class="loading-ball">⚽</span>
+      <strong>Carregando os detalhes...</strong>
+    </section>
+  } @else if (error()) {
+    <section class="detail-message" role="status">
+      <span class="message-symbol">!</span>
+      <h1>Jogo não encontrado</h1>
+      <p>{{ error() }}</p>
+      <p>{{ goBackDate() }}</p>
+      <a pButton routerLink="/" [queryParams]="{ data: dateValue() }" class="back-button">Ver jogos do dia</a>
+    </section>
+  } @else if (match(); as game) {
+    <p class="eyebrow">DETALHES DA PARTIDA</p>
+    <h1>{{ game.competition.name }}</h1>
+    <p class="detail-date">{{ goBackDate() }} · {{ kickoff(game.utcDate) }} · {{ label(game.status) }}</p>
+
+    <p-card styleClass="detail-card">
+      <div class="scoreboard">
+        <div class="club">
+          @if (game.homeTeam.crest) {
+            <img class="club-crest" [src]="game.homeTeam.crest" [alt]="game.homeTeam.name + ' escudo'" />
+          }
+          <span>{{ game.homeTeam.name }}</span>
+          @if (scorers(game, game.homeTeam.id).length > 0) {
+            <small>{{ scorers(game, game.homeTeam.id).join(', ') }}</small>
+          }
+        </div>
+
+        <div class="score">
+          <strong>{{ score(game.score.fullTime.home) }}</strong>
+          <span>×</span>
+          <strong>{{ score(game.score.fullTime.away) }}</strong>
+        </div>
+
+        <div class="club">
+          @if (game.awayTeam.crest) {
+            <img class="club-crest" [src]="game.awayTeam.crest" [alt]="game.awayTeam.name + ' escudo'" />
+          }
+          <span>{{ game.awayTeam.name }}</span>
+          @if (scorers(game, game.awayTeam.id).length > 0) {
+            <small>{{ scorers(game, game.awayTeam.id).join(', ') }}</small>
+          }
+        </div>
+      </div>
+
+      <div class="detail-divider"></div>
+
+      <div class="detail-facts">
+        <div>
+          <span class="fact-label">TRANSMISSÃO</span>
+          <strong>{{ broadcastLabel(game.broadcast) }}</strong>
+          <small>{{ broadcastNote(game.broadcast) }}</small>
+          @if (game.broadcast.sourceUrl) {
+            <a class="broadcast-source" [href]="game.broadcast.sourceUrl" target="_blank" rel="noopener noreferrer">{{ game.broadcast.source === 'GE' ? 'Ver agenda do ge' : 'Ver programação da CBF' }}</a>
+          }
+        </div>
+        <div>
+          <span class="fact-label">ESTÁDIO</span>
+          <strong>{{ game.venue || 'Local a confirmar' }}</strong>
+          <small>{{ game.competition.name }}</small>
+        </div>
+      </div>
+    </p-card>
+
+    <section class="preview-section" aria-labelledby="preview-title">
+      <div class="preview-heading">
+        <p class="eyebrow">PRÉ-JOGO</p>
+        <h2 id="preview-title">Notícias, desfalques e escalação provável</h2>
+      </div>
+
+      @if (previewLoading()) {
+        <div class="preview-empty" role="status">Buscando a prévia publicada pelo ge…</div>
+      } @else if (previewError()) {
+        <div class="preview-empty" role="status">
+          <p>{{ previewError() }}</p>
+          <button pButton type="button" class="preview-retry" (click)="reloadPreview()">Tentar novamente</button>
+        </div>
+      } @else if (preview(); as pregame) {
+        @if (pregame.available) {
+          <article class="preview-card">
+            <header class="preview-card-heading">
+              <div>
+                <span class="preview-source">Prévia do ge</span>
+                <h3>{{ pregame.title }}</h3>
+              </div>
+              @if (pregame.updatedAt) {
+                <small>{{ previewUpdatedAt(pregame.updatedAt) }}</small>
+              }
+            </header>
+
+            @if (pregame.summary) {
+              <p class="preview-summary">{{ pregame.summary }}</p>
+            }
+            @if (pregame.message) {
+              <p class="preview-summary">{{ pregame.message }}</p>
+            }
+
+            <div class="preview-teams">
+              @for (team of pregame.teams; track team.teamName) {
+                <section class="preview-team">
+                  <h4>{{ team.teamName }}</h4>
+                  <div class="preview-facts">
+                    <p><strong>Suspensos:</strong> {{ team.suspended || 'Não informado pelo ge.' }}</p>
+                    <p><strong>Lesionados:</strong> {{ team.injured || 'Não informado pelo ge.' }}</p>
+                    @if (team.otherAbsences) {
+                      <p><strong>Outros desfalques:</strong> {{ team.otherAbsences }}</p>
+                    }
+                    <p><strong>Provável escalação:</strong> {{ team.probableLineup || 'Ainda não publicada pelo ge.' }}</p>
+                  </div>
+                </section>
+              }
+            </div>
+
+            @if (pregame.sourceUrl) {
+              <a class="preview-source-link" [href]="pregame.sourceUrl" target="_blank" rel="noopener noreferrer">Ler matéria completa no ge ↗</a>
+            }
+          </article>
+        } @else {
+          <div class="preview-empty">
+            <p>{{ pregame.message }}</p>
+            @if (pregame.matchPageUrl) {
+              <a class="preview-source-link" [href]="pregame.matchPageUrl" target="_blank" rel="noopener noreferrer">Ver cobertura desta partida no ge ↗</a>
+            }
+          </div>
+        }
+      }
+    </section>
+
+    @if (game.goals.length === 0 && ['FINISHED', 'IN_PLAY', 'PAUSED'].includes(game.status)) {
+      <p class="goal-note">Os autores dos gols ainda não estão disponíveis para esta partida.</p>
+    }
+  }
+</main>

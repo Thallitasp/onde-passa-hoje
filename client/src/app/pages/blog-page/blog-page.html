@@ -1,0 +1,46 @@
+<main class="blog-shell">
+  @if (selectedPost(); as post) {
+    <a class="back-link" routerLink="/blog">← Voltar para o blog</a>
+    <article class="article">
+      <p class="eyebrow">{{ post.category }} <span>·</span> {{ post.readingTime }}</p>
+      <h1>{{ post.title }}</h1>
+      <p class="article-summary">{{ post.summary }}</p>
+      <div class="article-rule"></div>
+      @for (paragraph of post.paragraphs; track paragraph) {
+        <p class="article-paragraph">{{ paragraph }}</p>
+      }
+      <a pButton routerLink="/" class="article-cta">Ver jogos do dia</a>
+    </article>
+  } @else {
+    <section class="blog-heading">
+      <p class="eyebrow">NOTÍCIAS, GUIAS E CONTEXTO</p>
+      <h1>Além do apito inicial.</h1>
+      <p>Leituras rápidas para acompanhar a rodada com mais informação.</p>
+    </section>
+
+    <section class="post-grid" aria-label="Artigos do blog">
+      @for (post of posts; track post.slug) {
+        <a class="post-link" [routerLink]="['/blog', post.slug]">
+          <p-card styleClass="post-card">
+            <div class="post-art" aria-hidden="true"><span>⚽</span></div>
+            <p class="post-category">{{ post.category }}</p>
+            <h2>{{ post.title }}</h2>
+            <p class="post-summary">{{ post.summary }}</p>
+            <span class="post-read">Ler artigo <span aria-hidden="true">↗</span></span>
+          </p-card>
+        </a>
+      }
+    </section>
+  }
+
+  @if (selectedPost() && relatedPosts().length > 0) {
+    <section class="related-section">
+      <p class="eyebrow">CONTINUE A LEITURA</p>
+      <div class="related-links">
+        @for (post of relatedPosts(); track post.slug) {
+          <a [routerLink]="['/blog', post.slug]">{{ post.title }} <span aria-hidden="true">↗</span></a>
+        }
+      </div>
+    </section>
+  }
+</main>

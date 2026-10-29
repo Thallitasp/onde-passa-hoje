@@ -1,0 +1,29 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated output
+node_modules/
+**/node_modules/
+client/dist/
+client/.angular/
+coverage/
+*.log
+npm-debug.log*
+
+# Editors and operating-system files
+.vscode/
+client/.vscode/launch.json
+client/.vscode/tasks.json
+.idea/
+.history/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local prototypes and reference material, kept out of the source repository
+/teste.pdf
+/Onde Passa Hoje – protótipo*.html
+/Onde Passa Hoje – protótipo*.md
+/client/public/favicon.ico

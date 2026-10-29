@@ -1,0 +1,19 @@
+{
+  "name": "onde-passa-hoje",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || ^26.0.0"
+  },
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "concurrently --kill-others --names API,WEB \"node --watch server.mjs\" \"npm --prefix client start\"",
+    "api": "node --watch server.mjs",
+    "web": "npm --prefix client start",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

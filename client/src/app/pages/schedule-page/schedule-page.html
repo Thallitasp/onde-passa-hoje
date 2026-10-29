@@ -1,0 +1,210 @@
+<main class="page-shell">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot"></span> A rodada no seu radar</p>
+      <h1>Jogos de hoje.<br /><span>E onde assistir.</span></h1>
+      <p class="hero-description">Horários, confrontos e informações da transmissão em um só lugar.</p>
+    </div>
+
+    <div class="date-panel">
+      <label for="match-date">Escolha o dia</label>
+      <p-datepicker
+        inputId="match-date"
+        [ngModel]="selectedDate()"
+        (ngModelChange)="onDateSelected($event)"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        iconDisplay="input"
+        [showButtonBar]="true"
+        ariaLabel="Data dos jogos"
+      />
+      <div class="date-actions">
+        <button pButton type="button" class="quiet-button" (click)="selectToday()">Hoje</button>
+        <button pButton type="button" class="refresh-button" (click)="loadMatches()" [disabled]="loading()">
+          {{ loading() ? 'Atualizando…' : 'Atualizar' }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="date-intro" aria-live="polite">
+    <div>
+      <span class="section-kicker">AGENDA DO FUTEBOL</span>
+      <h2>{{ readableDate() }}</h2>
+    </div>
+    <span class="time-zone">Horários de Brasília · UTC−3</span>
+  </section>
+
+  <section class="summary-grid" aria-label="Resumo da rodada">
+    <article class="summary-card">
+      <span class="summary-icon">✦</span>
+      <span class="summary-label">Partidas</span>
+      <strong>{{ matches().length }}</strong>
+      <span class="summary-caption">na data selecionada</span>
+    </article>
+    <article class="summary-card summary-card-live">
+      <span class="summary-icon">●</span>
+      <span class="summary-label">Ao vivo</span>
+      <strong>{{ liveCount() }}</strong>
+      <span class="summary-caption">acontecendo agora</span>
+    </article>
+    <article class="summary-card">
+      <span class="summary-icon">✓</span>
+      <span class="summary-label">Encerrados</span>
+      <strong>{{ completedCount() }}</strong>
+      <span class="summary-caption">com resultado final</span>
+    </article>
+  </section>
+
+  @if (error()) {
+    <div class="message-card error-card" role="alert">
+      <span class="message-symbol">!</span>
+      <div>
+        <strong>Não foi possível carregar os jogos.</strong>
+        <p>{{ error() }}</p>
+      </div>
+      <button pButton type="button" class="quiet-button" (click)="loadMatches()">Tentar de novo</button>
+    </div>
+  }
+
+  @if (stale() && !error()) {
+    <p class="feed-message stale-message" role="status">{{ updateMessage() }}</p>
+  }
+
+  @if (goalEventsAvailable() === false && !error()) {
+    <p class="feed-message goal-message">
+      <span aria-hidden="true">ⓘ</span>
+      {{ updateMessage() }}
+    </p>
+  }
+
+  @if (matches().length > 0) {
+    <section class="match-section" aria-label="Partidas">
+      <header class="list-heading">
+        <div>
+          <span class="section-kicker">TODOS OS CONFRONTOS</span>
+          <h2>Partidas da rodada</h2>
+        </div>
+        <p-selectbutton
+          [options]="competitionOptions()"
+          optionLabel="label"
+          optionValue="value"
+          [ngModel]="selectedCompetition()"
+          (ngModelChange)="onCompetitionChange($event)"
+          [allowEmpty]="false"
+          ariaLabel="Filtrar por competição"
+        />
+      </header>
+
+      <div class="match-list">
+        @for (match of filteredMatches(); track match.id) {
+          <a class="match-link" [routerLink]="['/jogos', match.id]" [queryParams]="{ data: dateValue() }">
+            <p-card styleClass="match-card">
+              <div class="match-card-layout">
+                <div class="kickoff">
+                  <strong>{{ kickoff(match) }}</strong>
+                  <p-tag [value]="labelStatus(match.status)" [severity]="statusSeverity(match.status)" />
+                  @if (live(match.status) && match.minute !== null) {
+                    <span class="match-minute">{{ match.minute }}′</span>
+                  }
+                </div>
+
+                <div class="match-main">
+                  <div class="team-line">
+                    <div class="team-and-goals">
+                      <div class="team-name">
+                        @if (match.homeTeam.crest) {
+                          <img class="team-crest" [src]="match.homeTeam.crest" alt="" loading="lazy" />
+                        } @else {
+                          <span class="crest-placeholder" aria-hidden="true">{{ match.homeTeam.shortName.slice(0, 1) }}</span>
+                        }
+                        <strong>{{ match.homeTeam.shortName || match.homeTeam.name }}</strong>
+                      </div>
+                      @if (scorerNames(match, match.homeTeam.id).length > 0) {
+                        <span class="goal-list">({{ scorerNames(match, match.homeTeam.id).join(', ') }})</span>
+                      }
+                    </div>
+                    <strong class="team-score">{{ score(match.score.fullTime.home) }}</strong>
+                  </div>
+
+                  <div class="team-line">
+                    <div class="team-and-goals">
+                      <div class="team-name">
+                        @if (match.awayTeam.crest) {
+                          <img class="team-crest" [src]="match.awayTeam.crest" alt="" loading="lazy" />
+                        } @else {
+                          <span class="crest-placeholder" aria-hidden="true">{{ match.awayTeam.shortName.slice(0, 1) }}</span>
+                        }
+                        <strong>{{ match.awayTeam.shortName || match.awayTeam.name }}</strong>
+                      </div>
+                      @if (scorerNames(match, match.awayTeam.id).length > 0) {
+                        <span class="goal-list">({{ scorerNames(match, match.awayTeam.id).join(', ') }})</span>
+                      }
+                    </div>
+                    <strong class="team-score">{{ score(match.score.fullTime.away) }}</strong>
+                  </div>
+
+                  <div class="match-meta">
+                    @if (match.broadcast.status === 'confirmed' && match.broadcast.channels.length > 0) {
+                      <span class="channel-chip channel-confirmed"><span class="channel-dot"></span>{{ match.broadcast.channels.join(', ') }}</span>
+                    } @else if (match.broadcast.status === 'review') {
+                      <span class="channel-chip channel-review"><span class="channel-dot"></span>Transmissão a conferir</span>
+                    } @else {
+                      <span class="channel-chip"><span class="channel-dot"></span>Canal a confirmar</span>
+                    }
+                    <span>{{ match.competition.name }}</span>
+                  </div>
+                </div>
+
+                <span class="open-match" aria-hidden="true">↗</span>
+              </div>
+            </p-card>
+          </a>
+        } @empty {
+          <div class="message-card empty-card">
+            <span class="message-symbol">◷</span>
+            <div>
+              <strong>Nenhuma partida desta competição.</strong>
+              <p>Escolha outra competição ou confira outra data.</p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  } @else if (!loading() && !error()) {
+    <section class="empty-state">
+      <span class="empty-ball" aria-hidden="true">⚽</span>
+      <span class="section-kicker">AGENDA VAZIA</span>
+      <h2>Nenhum jogo por aqui.</h2>
+      <p>Não encontramos partidas para {{ readableDate() }}. Escolha outra data para conferir a rodada.</p>
+      <button pButton type="button" class="quiet-button" (click)="selectToday()">Voltar para hoje</button>
+    </section>
+  } @else if (loading()) {
+    <section class="loading-state" aria-live="polite">
+      <span class="loading-ball" aria-hidden="true">⚽</span>
+      <strong>Buscando a rodada...</strong>
+      <span>Consultando os jogos da data selecionada.</span>
+    </section>
+  }
+
+  @if (fetchedAt() && !error() && !stale() && matches().length > 0) {
+    <p class="feed-message">{{ updateMessage() }}</p>
+  }
+
+  <aside class="source-note">
+    <span class="source-mark">i</span>
+    <p>
+      @if (matchesSource() === 'ge') {
+        Jogos, horários, escudos e transmissões vêm diretamente da agenda do ge. Placar e autores dos gols são complementados pela Football-Data.org quando disponíveis.
+      } @else if (matchesSource() === 'cbf') {
+        Os jogos vêm da programação oficial da CBF. Resultados e autores dos gols podem não estar disponíveis.
+      } @else {
+        Jogos e resultados vêm da Football-Data.org; transmissões são buscadas primeiro na agenda do ge.
+      }
+      A programação da CBF continua como alternativa para canais que não constam no ge.
+      <a href="https://ge.globo.com/agenda/#/futebol" target="_blank" rel="noopener noreferrer">Consultar o ge</a>
+      ou
+      <a [href]="'https://www.cbf.com.br/futebol-brasileiro/onde-assistir?dataInicio=' + dateValue() + '&dataTermino=' + dateValue()" target="_blank" rel="noopener noreferrer">consultar a CBF</a>.
+    </p>
+  </aside>
+</main>
