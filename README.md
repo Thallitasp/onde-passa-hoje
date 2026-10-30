@@ -4,6 +4,8 @@ O Onde Passa Hoje é um projeto independente para consultar os jogos de futebol 
 
 O projeto é distribuído sob a licença [MIT](LICENSE), que permite consultar, usar, modificar e redistribuir o código nos termos da licença. Consulte também as condições próprias dos provedores de dados e ativos de terceiros.
 
+**Versão atual:** `0.4.0` — versão em desenvolvimento. O histórico e as regras de versionamento estão em [CHANGELOG.md](CHANGELOG.md).
+
 ## O que a aplicação oferece
 
 - Agenda de jogos por data, com horário de Brasília, competição, escudos, placar e status.
@@ -11,21 +13,25 @@ O projeto é distribuído sob a licença [MIT](LICENSE), que permite consultar, 
 - Detalhes da partida com notícias do ge, desfalques e escalação provável quando publicados.
 - Autores dos gols quando a Football-Data.org disponibiliza os eventos e a partida pode ser associada com segurança.
 - Filtros por competição, interface adaptável a celular e temas claro e escuro.
-- Área de blog com artigos de exemplo mantidos no frontend.
+- Área de blog em construção, com artigos de exemplo mantidos no frontend.
 
 Os dados podem estar incompletos ou mudar perto do início da partida. A interface identifica canais não confirmados e informa quando a cobertura editorial ainda não publicou desfalques ou escalações.
+
+## Configuração local
+
+O frontend usa Angular 21 e PrimeNG 21.1.10. Essa linha do PrimeNG é compatível com Angular 21 e não exige uma chave PrimeUI. O token da Football-Data.org continua opcional e é configurado no `.env` local.
 
 ## Tecnologias
 
 | Parte | Tecnologias |
 | --- | --- |
-| Frontend | Angular 22, TypeScript, HTML, CSS e PrimeNG |
-| Servidor local | Node.js 22 ou superior, módulos ES e servidor HTTP nativo |
+| Frontend | Angular 21, TypeScript, HTML, CSS e PrimeNG 21.1.10 |
+| Servidor local | Node.js 22 ou 24, módulos ES e servidor HTTP nativo |
 | Integrações | Agenda e matérias públicas do ge, programação da CBF e Football-Data.org opcional |
 
 ## Requisitos
 
-- Uma versão Node.js suportada no `package.json`: 22.22.3 ou superior na linha 22, 24.15.0 ou superior na linha 24, ou 26.0.0 ou superior na linha 26.
+- Node.js 22.12.0 ou superior na linha 22, ou Node.js 24 na linha 24.
 - npm, instalado junto com o Node.js.
 - Acesso à internet para buscar os dados das fontes.
 - Token da Football-Data.org apenas se quiser tentar complementar placares e autores dos gols.
